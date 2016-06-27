@@ -2,7 +2,7 @@ Control daemons for systemd in chroot environment
 =====================
 
 Servicectl - bash script start/stop service (daemons) for linux using systemd in chroot and SysVinit outside the chroot environment.
-servicectl management daemon uses the service files of systemd, e.g. /usr/lib/systemd/system/nginx.service
+servicectl management daemon uses the service files of systemd, e.g. /lib/systemd/system/nginx.service
 
 Introduction
 ---
@@ -13,23 +13,20 @@ sudo systemctl start nginx
 Running in chroot, ignoring request.
 ```
 If your base system (outside chroot):
-* used systemd, please refer to guide: http://0pointer.de/blog/projects/changing-roots
-* used SysVinit script, then you can use servicectl.
+* uses systemd, please refer to guide: http://0pointer.de/blog/projects/changing-roots
+* uses SysVinit script, then you can use servicectl.
 
-Requare for chroot system (inside chroot):
+Requirement for chroot system (inside chroot):
 * installed systemd
 
 Installation
 ---
 
-### Packages:
-ArchLinux - https://aur.archlinux.org/packages/servicectl/
 ### Manual:
 ```bash
-wget https://github.com/smaknsk/servicectl/archive/1.0.tar.gz
-tar -xf 1.0.tar.gz -C /usr/local/lib/
-ln -s /usr/local/lib/servicectl-1.0/servicectl /usr/local/bin/servicectl
-ln -s /usr/local/lib/servicectl-1.0/serviced /usr/local/bin/serviced
+wget https://github.com/ctr49/servicectl/zipball/master
+tar -xf master.tar.gz -C /usr/local/bin/
+mkdir /etc/init.d-chroot
 ```
 
 Usage
@@ -38,8 +35,8 @@ Usage
 ```bash
 sudo servicectl action service
 ```
-This command just exec ${action} from file /usr/lib/systemd/system/${service}.service
-If passed action enable or disable, servicectl create or delete symlink on ${service}.service for use serviced.
+This command just executes ${action} from file /usr/lib/systemd/system/${service}.service
+If passed action enable or disable, servicectl will create or delete symlink on ${service}.service to /etc/init.d-chroot for use by serviced.
 
 Params:
 * action - can be {start, stop, restart, reload, enable, disable}
@@ -56,7 +53,6 @@ Params:
 
 Example
 ---
-I'm using chrome os as the base system and archlinux in chroot environment.
 ```bash
 # inside chroot
 sudo servicectl enable nginx php-fpm
@@ -65,6 +61,3 @@ sudo servicectl enable nginx php-fpm
 # init startup and run all enabled daemons
 sudo chroot /path/to/chroot serviced
 ```
-
-If you know how to do it better, let me know =) 
-Good luck
