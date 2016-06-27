@@ -1,16 +1,16 @@
-#!/bin/sh
+#!/bin/bash
 # Control services for system based on Systemd inside chroot and SysVinit outside chroot
 # https://github.com/smaknsk/servicectl
 #
 
 # Pach systemd services file
-SYSTEMD_UNITS_PATH="/usr/lib/systemd/system/"
+SYSTEMD_UNITS_PATH="/lib/systemd/system/"
 
 # Path locate this script
 DIR=$(dirname $(readlink -f $0))
 
 # Path contents symlink on systemd units files
-SERVICECTL_ENABLED_PATH="$DIR/enabled/"
+SERVICECTL_ENABLED_PATH="/etc/init.d-chroot/"
 
 # Check is root
 if [ $EUID -ne 0 ]; then
@@ -199,7 +199,7 @@ case "$1" in
     ;;
     
     *)
-        echo "Availble action: start, stop, restart, reload, enable or disable"
+        echo "Available actions: start, stop, restart, reload, enable or disable"
         exit 1
     ;;
 esac
