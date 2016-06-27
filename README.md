@@ -24,8 +24,8 @@ Installation
 
 ### Manual:
 ```bash
-wget https://github.com/ctr49/servicectl/zipball/master
-tar -xf master.tar.gz -C /usr/local/bin/
+wget https://github.com/ctr49/servicectl/tarball/master
+tar --strip-components 1 -C /usr/local/bin --wildcards -zxf master */service*
 mkdir /etc/init.d-chroot
 ```
 
