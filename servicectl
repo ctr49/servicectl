@@ -6,9 +6,6 @@
 # Pach systemd services file
 SYSTEMD_UNITS_PATH="/lib/systemd/system/"
 
-# Path locate this script
-DIR=$(dirname $(readlink -f $0))
-
 # Path contents symlink on systemd units files
 SERVICECTL_ENABLED_PATH="/etc/init.d-chroot/"
 
